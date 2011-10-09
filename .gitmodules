@@ -3,7 +3,7 @@
 	url = https://github.com/fholgado/minibufexpl.vim
 [submodule "bundle/vim-session"]
 	path = bundle/vim-session
-	url = https://github.com/xolox/vim-session
+	url = https://github.com/xolox/vim-session.git
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
@@ -22,3 +22,18 @@
 [submodule "c:/Users/Chris-pc/vimfiles/bundle/gundo"]
 	path = c:/Users/Chris-pc/vimfiles/bundle/gundo
 	url = http://github.com/sjl/gundo.vim.git
+[submodule "supertab"]
+	path = supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "haskell-mode"]
+	path = haskell-mode
+	url = https://github.com/lukerandall/haskellmode-vim.git
+[submodule "bundle/haskell-mode"]
+	path = bundle/haskell-mode
+	url = https://github.com/lukerandall/haskellmode-vim.git
+[submodule "bundle/vim-markdown"]
+	path = bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown.git
