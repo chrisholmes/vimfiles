@@ -10,3 +10,15 @@
 [submodule "bundle/solarized"]
 	path = bundle/solarized
 	url = https://github.com/altercation/vim-colors-solarized
+[submodule "bundle/taglist"]
+	path = bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim
+[submodule "bundle/snimpmate"]
+	path = bundle/snimpmate
+	url = git://github.com/msanders/snipmate.vim.git
+[submodule "ctags"]
+	path = ctags
+	url = https://github.com/fishman/ctags.git
+[submodule "c:/Users/Chris-pc/vimfiles/bundle/gundo"]
+	path = c:/Users/Chris-pc/vimfiles/bundle/gundo
+	url = http://github.com/sjl/gundo.vim.git

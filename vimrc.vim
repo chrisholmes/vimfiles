@@ -1,11 +1,17 @@
 set cpoptions=aABceFsmq
+set cpoptions=aABceFsmq
 set nocp
+filetype off
+call pathogen#runtime_append_all_bundles() 
+call pathogen#helptags()
 filetype plugin indent on
+
+let mapleader = " "
 syntax on
 set showcmd
 set number
 set ruler
-colorscheme zenburn
+colorscheme solarized
 set cmdheight=2
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
@@ -18,7 +24,7 @@ set guifont=consolas
 
 
 set autoread "update to match outside changes
-set columns=180
+set columns=80
 
 set autoindent 
 
@@ -35,7 +41,6 @@ set tabstop=8
 set softtabstop=4
 set shiftwidth=4
 
-
 set foldenable
 set foldmarker={,}
 set foldmethod=marker
@@ -47,5 +52,15 @@ set autochdir
 set directory=$VIM/tmp
 set backup
 set backupdir=$VIM\backup
-
 set clipboard+=unnamed
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1 
+nmap <silent> <Leader>t :CommandT<CR>
+nmap <silent> <Leader>n :NERDTreeToggle
+nmap <silent> <Leader>nn :NERDTreeToggle<CR>
+call togglebg#map("<F5>")
+set shellslash
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor='latex'
