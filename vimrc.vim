@@ -66,7 +66,6 @@ set guioptions-=r
 set guioptions-=m
 set guioptions-=T
 map <F11> <Esc>:call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR> 
-if has('gui_running')
-    let g:vimroom_background= '#002b36'
-    let g:vimroom_background = '#002b36'
-endif
+
+let g:vimroom_guibackground = '#002b36'
+let g:vimroom_ctermbackground = 8
