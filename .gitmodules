@@ -16,21 +16,12 @@
 [submodule "bundle/snimpmate"]
 	path = bundle/snimpmate
 	url = git://github.com/msanders/snipmate.vim.git
-[submodule "ctags"]
-	path = ctags
-	url = https://github.com/fishman/ctags.git
-[submodule "c:/Users/Chris-pc/vimfiles/bundle/gundo"]
-	path = c:/Users/Chris-pc/vimfiles/bundle/gundo
+[submodule "bundle/gundo"]
+	path = bundle/gundo
 	url = http://github.com/sjl/gundo.vim.git
-[submodule "supertab"]
-	path = supertab
-	url = https://github.com/ervandew/supertab.git
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "haskell-mode"]
-	path = haskell-mode
-	url = https://github.com/lukerandall/haskellmode-vim.git
 [submodule "bundle/haskell-mode"]
 	path = bundle/haskell-mode
 	url = https://github.com/lukerandall/haskellmode-vim.git
