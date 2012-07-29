@@ -13,9 +13,6 @@
 [submodule "bundle/taglist"]
 	path = bundle/taglist
 	url = https://github.com/vim-scripts/taglist.vim
-[submodule "bundle/snimpmate"]
-	path = bundle/snimpmate
-	url = git://github.com/msanders/snipmate.vim.git
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = http://github.com/sjl/gundo.vim.git
@@ -46,3 +43,6 @@
 [submodule "bundle/vim-powerline"]
 	path = bundle/vim-powerline
 	url = http://github.com/Lokaltog/vim-powerline.git
+[submodule "bundle/vim-snipmate"]
+	path = bundle/vim-snipmate
+	url = https://github.com/garbas/vim-snipmate.git

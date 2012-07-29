@@ -35,4 +35,15 @@ Thumbs.db
 
 ruby/**/*
 eclim/**/*
+tmp/**/*
+tmp/*
 *.swp
+**/tags
+
+.netrwhist
+
+.VimballRecord
+
+tags
+
+.netrwhist
