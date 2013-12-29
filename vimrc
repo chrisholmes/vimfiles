@@ -26,23 +26,17 @@ set autowrite
 set cursorline
 set shellslash
 set grepprg=grep\ -inH\ $*
-set autochdir
 set expandtab
 set incsearch
 
-nnoremap ; :
 nnoremap <silent> <left> :bp<CR>
 nnoremap <silent> <right> :bn<CR>
 nnoremap <silent> <up> :cnext<CR>
 nnoremap <silent> <down> :cprev<CR>
+nnoremap ; :
 inoremap jj <Esc>
 nnoremap j gj
 nnoremap k gk
-
-nnoremap <C-j> <C-w>j 
-nnoremap <C-k> <C-w>k 
-nnoremap <C-l> <C-w>l 
-nnoremap <C-h> <C-w>h 
 
 set tabstop=4
 set shiftwidth=4
@@ -52,6 +46,9 @@ let g:rubycomplete_classes_in_global=1
 let g:rubycomplete_buffer_loading=1
 let g:rubycomplete_include_object=1
 let g:rubycomplete_include_objectspace=1
+
+set omnifunc=syntaxcomplete#Complete
+
 augroup file_formats
     autocmd!
     autocmd FileType ruby set tabstop=2
@@ -61,13 +58,11 @@ augroup file_formats
     autocmd FileType cpp set shiftwidth=4
     autocmd FileType cpp set softtabstop=4
     au FileType haskell compiler ghc
-    au FileType ruby compiler ruby
     au BufEnter * set tags=./tags;/
-    au BufEnter /Users/chris/project/globe/* set makeprg=make\ -C\ /Users/chris/project/globe/bin
     au FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-    au BufWritePost *vimrc so ~/.vimrc
+    au BufWritePost *vimrc so ~/.vim/vimrc
 augroup end
-set omnifunc=syntaxcomplete#Complete
+
 "guioptions
 set guioptions-=r
 set guioptions-=m
@@ -86,10 +81,14 @@ set noswapfile
 
 
 "plugin settings
-nnoremap <silent> <leader>m :VimroomToggle<CR>
+nnoremap  <silent> <Leader>m :Make<CR>
+nnoremap <leader>rr :Rake<CR>
 nnoremap  <silent> <Leader>g :GundoToggle<CR>
 nnoremap <silent> <Leader>n :NERDTreeToggle
 nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
+nnoremap <Leader>t :Dispatch call RunCurrentSpecFile()<CR>
+nnoremap <Leader>l :Dispatch call RunLastSpec()<CR>
+
 let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:Powerline_symbols = "fancy"
 let g:tex_flavor='latex'
@@ -98,5 +97,48 @@ let g:clang_use_library=1
 let g:syntastic_cpp_config_file='.clang_complete'
 let g:Powerline_theme='short'
 let g:Powerline_colorscheme='solarized256'
-set shell=zsh
-nnoremap <leader>rr :Rake<CR>
+let g:rspec_command = "Dispatch rspec {spec}"
+
+let g:C_Ctrl_j = 'off'
+let g:BASH_Ctrl_j = 'off'
+
+autocmd FileType cucumber compiler cucumber | setl makeprg=cucumber\ \"%:p\"
+autocmd FileType ruby
+      \ if expand('%') =~# '_test\.rb$' |
+      \   compiler rubyunit | setl makeprg=testrb\ \"%:p\" |
+      \ elseif expand('%') =~# '_spec\.rb$' |
+      \   compiler rspec | setl makeprg=rspec\ -fp\ --color\ \ \"%:p\" |
+      \ else |
+      \   compiler ruby | setl makeprg=ruby\ -wc\ \"%:p\" |
+      \ endif
+autocmd User Bundler
+      \ if &makeprg !~# 'bundle' | setl makeprg^=bundle\ exec\  | endif
+
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      execute "silent !sh -c 'sleep 0.01; tmux select-pane -" . a:tmuxdir . "' &"
+      redraw!
+    endif
+  endfunction
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;".  previous_title . "\<Esc>\\" . &t_te
+  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  map <C-k> <C-w>k
+  map <C-l> <C-w>l
+endif
+
+
+cmap w!! w !sudo tee > /dev/null %
+cmap Gs Gstatus
+
+iabbrev inititalize initialize
