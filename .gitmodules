@@ -1,6 +1,3 @@
-[submodule "bundle/vim-session"]
-	path = bundle/vim-session
-	url = https://github.com/xolox/vim-session.git
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
@@ -52,3 +49,15 @@
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/bling/vim-airline.git
+[submodule "bundle/vim-rails"]
+	path = bundle/vim-rails
+	url = https://github.com/tpope/vim-rails.git
+[submodule "bundle/fireplace"]
+	path = bundle/fireplace
+	url = git://github.com/tpope/vim-fireplace.git
+[submodule "bundle/classpath"]
+	path = bundle/classpath
+	url = git://github.com/tpope/vim-classpath.git
+[submodule "bundle/clojure-static"]
+	path = bundle/clojure-static
+	url = git://github.com/guns/vim-clojure-static.git

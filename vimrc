@@ -82,6 +82,7 @@ set noswapfile
 
 "plugin settings
 nnoremap  <silent> <Leader>m :Make<CR>
+nnoremap  <silent> <Leader>c :Latexmk<CR>
 nnoremap <leader>rr :Rake<CR>
 nnoremap  <silent> <Leader>g :GundoToggle<CR>
 nnoremap <silent> <Leader>n :NERDTreeToggle
@@ -142,3 +143,5 @@ cmap w!! w !sudo tee > /dev/null %
 cmap Gs Gstatus
 
 iabbrev inititalize initialize
+iabbrev intitilize initialize
+iabbrev intitialzie initialize
