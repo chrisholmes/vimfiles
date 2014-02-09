@@ -38,9 +38,9 @@ inoremap jj <Esc>
 nnoremap j gj
 nnoremap k gk
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 let g:rubycomplete_rails=1
 let g:rubycomplete_classes_in_global=1
 let g:rubycomplete_buffer_loading=1
