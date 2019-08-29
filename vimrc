@@ -27,6 +27,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'hashivim/vim-terraform'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'leafgarland/typescript-vim'
+Plugin 'xavierchow/vim-swagger-preview'
+Plugin 'mikewest/vimroom'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -34,7 +36,7 @@ set nocp
 set cpoptions=aABceFsmq
 "colour options
 set t_Co=256
-set background=dark
+set background=light
 colorscheme solarized
 set hidden
 
@@ -98,7 +100,6 @@ set guioptions-=m
 set guioptions-=T
 set guifont=Consolas\ for\ powerline:h14
 set wrap
-set textwidth=80
 set formatoptions=qrn1
 set colorcolumn=+1
 
@@ -189,4 +190,4 @@ let g:rails_projections = {
 
 
 autocmd FileType markdown setlocal spell
-
+let g:ale_sign_column_always = 1
