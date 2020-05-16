@@ -3,9 +3,9 @@ filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'janko-m/vim-test'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-dispatch'
@@ -29,6 +29,9 @@ Plugin 'Quramy/tsuquyomi'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'xavierchow/vim-swagger-preview'
 Plugin 'mikewest/vimroom'
+Plugin 'junegunn/limelight.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'iamcco/markdown-preview.nvim'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -131,36 +134,14 @@ let g:C_Ctrl_j = 'off'
 let g:BASH_Ctrl_j = 'off'
 
 
-if exists('$TMUX')
-  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
-    let previous_winnr = winnr()
-    execute "wincmd " . a:wincmd
-    if previous_winnr == winnr()
-      execute "silent !sh -c 'sleep 0.01; tmux select-pane -" . a:tmuxdir . "' &"
-      redraw!
-    endif
-  endfunction
-  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
-  let &t_ti = "\<Esc>]2;nvim\<Esc>\\" . &t_ti
-  let &t_te = "\<Esc>]2;".  previous_title . "\<Esc>\\" . &t_te
-  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
-  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
-  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
-  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
-else
-  nnoremap <C-h> <C-w>h
-  nnoremap <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
-endif
-
-
 cmap w!! w !sudo tee > /dev/null %
 cmap Gs Gstatus
 
 iabbrev inititalize initialize
 iabbrev intitilize initialize
 iabbrev intitialzie initialize
+iabbrev incrememets increments
+iabbrev interaciton interaction
 
 let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=2
@@ -171,6 +152,7 @@ nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
 nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
 nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
+nmap <silent> t<C-r> :Dispatch ruby %<CR>
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
 
@@ -191,3 +173,4 @@ let g:rails_projections = {
 
 autocmd FileType markdown setlocal spell
 let g:ale_sign_column_always = 1
+
