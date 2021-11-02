@@ -1,8 +1,10 @@
+set shell=/bin/zsh
 call pathogen#infect()
 filetype off
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+Plugin 'skywind3000/asyncrun.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
@@ -21,7 +23,6 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'rodjek/vim-puppet'
-Plugin 'w0rp/ale'
 Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/nerdtree'
 Plugin 'hashivim/vim-terraform'
@@ -32,6 +33,10 @@ Plugin 'mikewest/vimroom'
 Plugin 'junegunn/limelight.vim'
 Plugin 'junegunn/goyo.vim'
 Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plugin 'nvim-treesitter/playground'
+Plugin 'neovim/nvim-lspconfig'
+Plugin 'hrsh7th/nvim-compe'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -75,13 +80,13 @@ nnoremap k gk
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-let g:rubycomplete_rails=1
-let g:rubycomplete_classes_in_global=1
-let g:rubycomplete_buffer_loading=1
-let g:rubycomplete_include_object=1
-let g:rubycomplete_include_objectspace=1
+" let g:rubycomplete_rails=1
+" let g:rubycomplete_classes_in_global=1
+" let g:rubycomplete_buffer_loading=1
+" let g:rubycomplete_include_object=1
+" let g:rubycomplete_include_objectspace=1
 
-set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete
 
 augroup file_formats
     autocmd!
@@ -93,7 +98,7 @@ augroup file_formats
     autocmd FileType cpp set softtabstop=4
     au FileType haskell compiler ghc
     au BufEnter * set tags=./tags;/
-    au FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+    " au FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
     au BufWritePost *vimrc so ~/.vim/vimrc
 augroup end
 
@@ -128,7 +133,7 @@ let g:clang_library_path="/usr/lib/"
 let g:clang_use_library=1
 let g:Powerline_theme='short'
 let g:Powerline_colorscheme='solarized256'
-let g:rspec_command = "Dispatch rspec {spec}"
+
 
 let g:C_Ctrl_j = 'off'
 let g:BASH_Ctrl_j = 'off'
@@ -152,11 +157,8 @@ nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
 nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
 nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
-nmap <silent> t<C-r> :Dispatch ruby %<CR>
 " make test commands execute using dispatch.vim
 let test#strategy = "dispatch"
-
-let g:ale_ruby_rubocop_options = "-c ~/.rbenv/versions/2.4.2/lib/ruby/gems/2.4.0/gems/govuk-lint-3.8.0/configs/rubocop/all.yml"
 
 let test#ruby#rspec#options = ""
 
@@ -173,4 +175,88 @@ let g:rails_projections = {
 
 autocmd FileType markdown setlocal spell
 let g:ale_sign_column_always = 1
+
+if has('nvim')
+  tmap <C-o> <C-\><C-n>
+endif
+
+lua << EOF
+
+-- Use an on_attach function to only map the following keys 
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.bf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+end
+
+require'lspconfig'.solargraph.setup{
+  on_attach = on_attach;
+  settings = {
+    solargraph = {
+      useBundler = true;
+      }
+    }
+}
+
+require'compe'.setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  resolve_timeout = 800;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+
+  source = {
+    path = true;
+    buffer = true;
+    calc = true;
+    nvim_lsp = true;
+    nvim_lua = true;
+    vsnip = true;
+    ultisnips = true;
+  };
+}
+EOF
+
+set completeopt=menuone,noselect
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
+
 
