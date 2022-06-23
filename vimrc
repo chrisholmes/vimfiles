@@ -12,7 +12,7 @@ Plugin 'janko-m/vim-test'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-rails'
-Plugin 'sjl/gundo.vim'
+Plugin 'mbbill/undotree'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'tpope/vim-projectionist'
@@ -36,7 +36,17 @@ Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plugin 'nvim-treesitter/playground'
 Plugin 'neovim/nvim-lspconfig'
-Plugin 'hrsh7th/nvim-compe'
+Plugin 'hrsh7th/cmp-nvim-lsp'
+Plugin 'hrsh7th/nvim-cmp'
+Plugin 'c-brenn/fuzzy-projectionist.vim'
+Plugin 'andyl/vim-projectionist-elixir'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'jose-elias-alvarez/null-ls.nvim'
+Plugin 'nvim-lua/plenary.nvim'
+Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf.vim'
+Plugin 'gfanto/fzf-lsp.nvim'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -80,13 +90,6 @@ nnoremap k gk
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-" let g:rubycomplete_rails=1
-" let g:rubycomplete_classes_in_global=1
-" let g:rubycomplete_buffer_loading=1
-" let g:rubycomplete_include_object=1
-" let g:rubycomplete_include_objectspace=1
-
-" set omnifunc=syntaxcomplete#Complete
 
 augroup file_formats
     autocmd!
@@ -98,7 +101,6 @@ augroup file_formats
     autocmd FileType cpp set softtabstop=4
     au FileType haskell compiler ghc
     au BufEnter * set tags=./tags;/
-    " au FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
     au BufWritePost *vimrc so ~/.vim/vimrc
 augroup end
 
@@ -122,7 +124,6 @@ set noswapfile
 nnoremap  <silent> <Leader>m :Make<CR>
 nnoremap  <silent> <Leader>c :Latexmk<CR>
 nnoremap <leader>rr :Rake<CR>
-nnoremap  <silent> <Leader>g :GundoToggle<CR>
 nnoremap <silent> <Leader>n :NERDTreeToggle
 nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
 
@@ -197,7 +198,7 @@ local on_attach = function(client, bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.bf.hover()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -207,7 +208,6 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
@@ -260,3 +260,42 @@ inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
 inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
 
 
+
+lua << EOF
+
+-- Finally, let's initialize the Elixir language server
+
+-- Replace the following with the path to your installation
+local path_to_elixirls = vim.fn.expand("~/.cache/nvim/lspconfig/elixirls/elixir-ls/release/language_server.sh")
+
+require'lspconfig'.elixirls.setup({
+  cmd = {path_to_elixirls},
+  capabilities = capabilities,
+  on_attach = on_attach,
+  settings = {
+    elixirLS = {
+      -- I choose to disable dialyzer for personal reasons, but
+      -- I would suggest you also disable it unless you are well
+      -- aquainted with dialzyer and know how to use it.
+      dialyzerEnabled = false,
+      -- I also choose to turn off the auto dep fetching feature.
+      -- It often get's into a weird state that requires deleting
+      -- the .elixir_ls directory and restarting your editor.
+      fetchDeps = false
+    }
+  }
+})
+
+require("null-ls").setup({
+    sources = {
+        require("null-ls").builtins.diagnostics.vale,
+        require("null-ls").builtins.diagnostics.rubocop,
+    },
+})
+EOF
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
