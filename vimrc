@@ -47,6 +47,7 @@ Plugin 'nvim-telescope/telescope.nvim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plugin 'junegunn/fzf.vim'
 Plugin 'gfanto/fzf-lsp.nvim'
+Plugin 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -299,3 +300,9 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+lua <<EOF
+require'toggle_lsp_diagnostics'.init()
+EOF
+
+nnoremap <leader>e <Plug>(toggle-lsp-diag)
