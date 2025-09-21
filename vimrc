@@ -1,63 +1,70 @@
 set shell=/bin/zsh
 filetype off
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'skywind3000/asyncrun.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'janko-m/vim-test'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-dispatch'
-Plugin 'tpope/vim-rails'
-Plugin 'mbbill/undotree'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-projectionist'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rake'
-Plugin 'tpope/vim-bundler'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'rodjek/vim-puppet'
-Plugin 'pangloss/vim-javascript'
-Plugin 'scrooloose/nerdtree'
-Plugin 'hashivim/vim-terraform'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'leafgarland/typescript-vim'
-" Plugin 'xavierchow/vim-swagger-preview'
-Plugin 'mikewest/vimroom'
-Plugin 'junegunn/limelight.vim'
-Plugin 'junegunn/goyo.vim'
-Plugin 'iamcco/markdown-preview.nvim'
-Plugin 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plugin 'nvim-treesitter/playground'
-Plugin 'neovim/nvim-lspconfig'
-Plugin 'hrsh7th/cmp-nvim-lsp'
-Plugin 'hrsh7th/cmp-buffer'
-Plugin 'hrsh7th/cmp-path'
-Plugin 'hrsh7th/cmp-cmdline'
-Plugin 'hrsh7th/nvim-cmp'
-Plugin 'hrsh7th/cmp-vsnip'
-Plugin 'hrsh7th/vim-vsnip'
-Plugin 'c-brenn/fuzzy-projectionist.vim'
-Plugin 'andyl/vim-projectionist-elixir'
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'nvim-lua/plenary.nvim'
-Plugin 'nvim-telescope/telescope.nvim'
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'junegunn/fzf.vim'
-Plugin 'gfanto/fzf-lsp.nvim'
-Plugin 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
-Plugin 'github/copilot.vim'
-Plugin 'mfussenegger/nvim-lint'
-call vundle#end()
 
 call plug#begin()
-Plug 'zbirenbaum/copilot.lua'
-Plug 'CopilotC-Nvim/CopilotChat.nvim', { 'branch': 'canary' }
+Plug 'skywind3000/asyncrun.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'janko-m/vim-test'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-rails'
+Plug 'mbbill/undotree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-bundler'
+Plug 'tomtom/tcomment_vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'rodjek/vim-puppet'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdtree'
+Plug 'hashivim/vim-terraform'
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
+Plug 'mikewest/vimroom'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'c-brenn/fuzzy-projectionist.vim'
+Plug 'andyl/vim-projectionist-elixir'
+Plug 'elixir-editors/vim-elixir'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'gfanto/fzf-lsp.nvim'
+Plug 'WhoIsSethDaniel/toggle-lsp-diagnostics.nvim'
+Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'mfussenegger/nvim-lint'
+Plug 'stevearc/dressing.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+
+Plug 'shaunsingh/solarized.nvim'
+
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'hrsh7th/nvim-cmp', " Optional: For using slash commands and variables in the chat buffer
+Plug 'nvim-telescope/telescope.nvim', " Optional: For using slash commands
+Plug 'stevearc/dressing.nvim' " Optional: Improves `vim.ui.select`
+Plug 'MeanderingProgrammer/render-markdown.nvim' " Optional: For prettier markdown rendering
+Plug 'j-hui/fidget.nvim'
+Plug 'olimorris/codecompanion.nvim'
+Plug 'karb94/neoscroll.nvim'
 call plug#end()
 filetype plugin indent on
 syntax on
@@ -65,6 +72,12 @@ set nocp
 set cpoptions=aABceFsmq
 "colour options
 set t_Co=256
+
+lua << EOF
+  vim.opt.termguicolors=true
+EOF
+
+set termguicolors
 set background=light
 colorscheme solarized
 set hidden
@@ -88,6 +101,42 @@ set shellslash
 set grepprg=grep\ -inH\ $*
 set expandtab
 set incsearch
+
+" Make sure the plugin is installed using :PlugInstall. Then, somewhere after plug#end():
+lua <<EOF
+require("fidget").setup {
+  -- options
+}
+EOF
+
+lua << EOF
+
+require("codecompanion").setup({
+  adapters = {
+    copilot = function()
+      return require("codecompanion.adapters").extend("copilot", {
+        name = "copilot", -- Give this adapter a different name to differentiate it from the default ollama adapter
+        schema = {
+          model = {
+            default = "claude-3.7-sonnet"
+          },
+        },
+      })
+    end,
+  },
+  strategies = {
+    chat = {
+      adapter = "copilot",
+    },
+    inline = {
+      adapter = "copilot",
+    },
+  },
+  extensions = {
+  }
+})
+
+EOF
 
 nnoremap <silent> <left> :bp<CR>
 nnoremap <silent> <right> :bn<CR>
@@ -115,6 +164,10 @@ augroup file_formats
     au BufWritePost *vimrc so ~/.vim/vimrc
 augroup end
 
+
+" set copilot workspace for buffer to be root of git repository
+autocmd BufEnter * let b:copilot_workspace_folder = system('git rev-parse --show-toplevel | tr -d "\n"')
+
 "guioptions
 set guioptions-=r
 set guioptions-=m
@@ -129,13 +182,6 @@ set backupdir=~/.vim/tmp/backup// " backups
 set directory=~/.vim/tmp/swap//   " swap files
 set backup                        " enable backups
 set noswapfile                    
-
-lua << EOF
-require("CopilotChat").setup {
-  debug = true, -- Enable debugging
-  -- See Configuration section for rest
-}
-EOF
 
 "plugin settings
 nnoremap  <silent> <Leader>m :Make<CR>
@@ -174,7 +220,7 @@ nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
 nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
 nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 " make test commands execute using dispatch.vim
-let test#strategy = "dispatch"
+let test#strategy = "neovim"
 
 let test#ruby#rspec#options = ""
 
@@ -211,7 +257,11 @@ lspconfig.rust_analyzer.setup {
   },
 }
  
-lspconfig.ruby_ls.setup{}
+lspconfig.ruby_lsp.setup{}
+
+lspconfig.solargraph.setup{}
+
+
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -308,3 +358,18 @@ EOF
 
 nnoremap <leader>e <Plug>(toggle-lsp-diag)
 set encoding=utf8
+
+lua << EOF
+-- local function smart_move(direction, tmux_cmd)
+--   local curwin = vim.api.nvim_get_current_win()
+--   vim.cmd('wincmd ' .. direction)
+--   if curwin == vim.api.nvim_get_current_win() then
+--     vim.fn.system('tmux select-pane ' .. tmux_cmd)
+--   end
+-- end
+--
+-- vim.keymap.set('n', '<C-h>', function() smart_move('h', '-L') end, {silent = true})
+-- vim.keymap.set('n', '<C-j>', function() smart_move('j', '-D') end, {silent = true})
+-- vim.keymap.set('n', '<C-k>', function() smart_move('k', '-U') end, {silent = true})
+-- vim.keymap.set('n', '<C-l>', function() smart_move('l', '-R') end, {silent = true})
+EOF
